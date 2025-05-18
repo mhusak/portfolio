@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- This section contains meta information about the webpage -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- The title appears in the browser tab -->
-    <title>My First Website</title>
-    
-    <!-- Internal CSS to style your website -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 2rem;
+            margin: 0;
             background-color: #f4f4f4;
             color: #333;
         }
 
-        header {
-            background-color: ##1c0bd6;
-            color: white;
+        nav {
+            background-color: #333;
             padding: 1rem;
             text-align: center;
         }
 
-        section {
-            margin-top: 2rem;
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem;
         }
 
         footer {
@@ -37,21 +49,27 @@
     </style>
 </head>
 <body>
-    <!-- The header section usually contains the website title and navigation -->
+    <!-- Navigation menu -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="cv.html">CV</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
     <header>
-        <h1>Welcome to My Website</h1>
-        <p>This is my first GitHub Pages site!</p>
+        <h1>Hello, I'm [Your Name]</h1>
+        <p>Welcome to my personal portfolio</p>
     </header>
 
-    <!-- Main content area of your site -->
-    <section>
-        <h2>About Me</h2>
-        <p>I’m learning how to build websites using GitHub Pages.</p>
-    </section>
+    <main>
+        <h2>Who am I?</h2>
+        <p>This is my homepage. I'm using this space to represent myself online, beyond LinkedIn.</p>
+    </main>
 
-    <!-- Footer is usually at the bottom and contains copyright or contact info -->
     <footer>
-        <p>&copy; 2025 Michael Husak</p>
+        <p>&copy; 2025 Your Name</p>
     </footer>
 </body>
 </html>
