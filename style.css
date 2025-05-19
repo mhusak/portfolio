@@ -1,97 +1,84 @@
-/* === Global Reset & Base === */
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+body, html {
+  height: 100%;
   font-family: 'Inter', sans-serif;
-  background-color: #f9f9f9;
-  color: #1a1a1a;
-  line-height: 1.6;
-  padding: 40px;
 }
 
-/* === Hero Section === */
-.hero-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 80vh;
-  gap: 60px;
-  position: relative;
-  padding: 60px 0;
-}
-
-.hero-content {
-  max-width: 600px;
-}
-
-.hero-content h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  font-weight: 300;
-  margin-bottom: 30px;
-  max-width: 500px;
-}
-
-/* Buttons */
-.hero-buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.btn {
-  text-decoration: none;
+/* Header Bar */
+.top-bar {
   background-color: #1a1a1a;
   color: #fff;
-  padding: 12px 22px;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Hero Section with Background */
+.hero {
+  height: 100vh;
+  background-image: url('assets/hero.jpg'); /* Use your actual image path */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  color: #fff;
+  position: relative;
+}
+
+/* Text Box */
+.hero-textbox {
+  max-width: 500px;
+  background-color: rgba(0, 0, 0, 0.6); /* Optional background for contrast */
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.hero-textbox h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.hero-textbox p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+/* Button Styling */
+.hero-button {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #ff6b6b;
+  color: #fff;
+  padding: 12px 24px;
   border-radius: 30px;
-  font-size: 0.95rem;
+  font-weight: 500;
   transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #444;
+.hero-button:hover {
+  background-color: #e55b5b;
 }
 
-/* Image Styling */
-.hero-image {
-  flex-shrink: 0;
-  width: 400px;
-  position: relative;
-  transform: translateY(30px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-.hero-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .hero-section {
-    flex-direction: column;
-    text-align: center;
-    padding: 30px 20px;
-  }
-
-  .hero-image {
-    width: 90%;
-    margin-top: 40px;
-  }
-
-  .hero-buttons {
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 30px;
     justify-content: center;
-    flex-wrap: wrap;
+  }
+
+  .hero-textbox {
+    padding: 30px 20px;
+    text-align: center;
   }
 }
