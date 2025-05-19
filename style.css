@@ -23,7 +23,7 @@ body, html {
 /* Hero Section with Background */
 .hero {
   height: 100vh;
-  background-image: url('assets/hero.jpg'); /* Use your actual image path */
+  background-image: url('assets/hero.jpg'); /* Adjust path if needed */
   background-size: cover;
   background-position: center;
   display: flex;
