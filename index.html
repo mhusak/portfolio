@@ -2,40 +2,259 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Name | Portfolio</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio with Burger Menu</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Header Bar */
+    .top-bar {
+      background-color: #1a1a1a;
+      color: #fff;
+      padding: 20px 20px;
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      position: relative;
+      justify-content: center;
+    }
+
+    .top-bar-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    /* Burger menu button */
+    .burger-menu {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      padding: 0;
+      margin-right: auto; /* push it left */
+    }
+
+    .burger-menu span {
+      display: block;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    /* Navigation menu - initially hidden */
+    .nav-menu {
+      position: absolute;
+      top: 60px; /* below top-bar */
+      left: 20px;
+      background-color: #1a1a1a;
+      border-radius: 8px;
+      padding: 10px 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .nav-menu a:hover {
+      color: #ff6b6b;
+    }
+
+    /* Show nav menu when active */
+    .nav-menu.active {
+      display: flex;
+    }
+
+    /* Responsive: hide menu links on wide screen, show inline */
+    @media(min-width: 768px) {
+      .burger-menu {
+        display: none; /* hide burger on desktop */
+      }
+      .nav-menu {
+        position: static;
+        display: flex !important;
+        flex-direction: row;
+        gap: 40px;
+        background: none;
+        padding: 0;
+      }
+      .top-bar {
+        justify-content: space-between;
+      }
+      .top-bar-title {
+        text-align: left;
+      }
+    }
+
+    /* Hero Section with Background */
+    .hero {
+      height: 100vh;
+      background-image: url('assets/hero.jpg'); /* Adjust path if needed */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      padding-left: 60px;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Text Box */
+    .hero-textbox {
+      max-width: 500px;
+      background-color: rgba(0, 0, 0, 0.6); /* Optional background for contrast */
+      padding: 40px;
+      border-radius: 8px;
+    }
+
+    .hero-textbox h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .hero-textbox p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    /* Button Styling */
+    .hero-button {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #ff6b6b;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .hero-button:hover {
+      background-color: #e55b5b;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 30px;
+        justify-content: center;
+      }
+
+      .hero-textbox {
+        padding: 30px 20px;
+        text-align: center;
+      }
+    }
+
+    /* Section below hero */
+    .section-links {
+      background-color: #0a1f3c; /* Dark blue tone */
+      color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 100px 20px;
+      flex-wrap: wrap;
+      min-height: 100vh;
+    }
+
+    .link-box {
+      background-color: #1f3a60;   /* Slightly lighter blue */
+      padding: 60px 80px;          /* Bigger padding for larger size */
+      margin: 20px;
+      border-radius: 20px;         /* More rounded corners */
+      text-align: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      min-width: 250px;            /* Minimum width to keep them rectangular */
+      min-height: 150px;           /* Minimum height for rectangle shape */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-box a {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .link-box:hover {
+      transform: scale(1.05);
+      background-color: #2d4d7a;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="top-bar">
-    <h1>Your Name</h1>
-  </header>
+  <div class="top-bar">
+    <button class="burger-menu" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="top-bar-title">My Portfolio</div>
+    <nav class="nav-menu">
+      <a href="#cv">CV</a>
+      <a href="#projects">Projects</a>
+      <a href="#contacts">Contacts</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-textbox">
       <h2>Welcome to my portfolio</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod lorem ut nisi blandit cursus.</p>
-      <a href="about.html" class="hero-button">About Me</a>
+      <p>Here you'll find info about me, my projects, and how to contact me.</p>
+      <a href="#projects" class="hero-button">See Projects</a>
     </div>
   </section>
 
-  <!-- Section below the hero -->
   <section class="section-links">
-    <div class="link-box">
-      <a href="cv.html">CV</a>
-    </div>
-    <div class="link-box">
-      <a href="projects.html">Projects</a>
-    </div>
-    <div class="link-box">
-      <a href="contact.html">Contact</a>
-    </div>
+    <div id="cv" class="link-box"><a href="#cv">CV</a></div>
+    <div id="projects" class="link-box"><a href="#projects">Projects</a></div>
+    <div id="contacts" class="link-box"><a href="#contacts">Contacts</a></div>
   </section>
 
+  <script>
+    const burger = document.querySelector('.burger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    burger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    window.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !burger.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
+  </script>
 
 </body>
 </html>
