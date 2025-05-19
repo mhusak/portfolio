@@ -82,3 +82,37 @@ body, html {
     text-align: center;
   }
 }
+
+/* Section below hero */
+.section-links {
+  background-color: #0a1f3c; /* Dark blue tone */
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 100px 20px;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.link-box {
+  background-color: #1f3a60; /* Slightly lighter blue */
+  padding: 40px 60px;
+  margin: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.link-box a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.link-box:hover {
+  transform: scale(1.05);
+  background-color: #2d4d7a;
+}
+
