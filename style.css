@@ -96,13 +96,26 @@ body, html {
 }
 
 .link-box {
-  background-color: #1f3a60; /* Slightly lighter blue */
-  padding: 40px 60px;
+  background-color: #1f3a60;   /* Slightly lighter blue */
+  padding: 60px 80px;          /* Bigger padding for larger size */
   margin: 20px;
-  border-radius: 12px;
+  border-radius: 20px;         /* More rounded corners */
   text-align: center;
   transition: transform 0.3s ease, background-color 0.3s ease;
+  min-width: 250px;            /* Minimum width to keep them rectangular */
+  min-height: 150px;           /* Minimum height for rectangle shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.link-box a {
+  color: white;
+  text-decoration: none;
+  font-size: 28px;             /* Slightly bigger font */
+  font-weight: bold;
+}
+
 
 .link-box a {
   color: white;
