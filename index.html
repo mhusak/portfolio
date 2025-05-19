@@ -1,76 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        nav {
-            background-color: #333;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 1rem;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        header {
-            background-color: #090e9c;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        main {
-            padding: 2rem;
-        }
-
-        footer {
-            margin-top: 4rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #777;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - My Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Navigation menu -->
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="cv.html">CV</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="cv.html">CV</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 
-    <header>
-        <h1>Hello, I'm [Your Name]</h1>
-        <p>Welcome to my personal portfolio</p>
-    </header>
+  <!-- Hero section -->
+  <header class="hero">
+    <div class="hero-content">
+      <img src="profile.jpg" alt="Your photo" class="hero-image"/>
+      <h1>Hello, I'm [Your Name]</h1>
+      <p class="tagline">Logistics strategist • Tech enthusiast • Future thinker</p>
+      <a href="about.html" class="btn-primary">Learn more about me</a>
+    </div>
+  </header>
 
-    <main>
-        <h2>Who am I?</h2>
-        <p>This is my homepage. I'm using this space to represent myself online, beyond LinkedIn.</p>
-    </main>
+  <main>
+    <!-- Short intro -->
+    <section class="intro">
+      <p>
+        I'm a [Your Job Title] with a passion for optimizing systems, leading people, and exploring how technology can drive better decisions. Welcome to my portfolio — where I share my journey, my work, and what drives me.
+      </p>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Your Name</p>
-    </footer>
+    <!-- Quick links -->
+    <section class="quick-links">
+      <a href="projects.html" class="card">🛠 My Projects</a>
+      <a href="cv.html" class="card">📄 My CV</a>
+      <a href="contact.html" class="card">✉️ Get in Touch</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 [Your Name] — Let's connect.</p>
+  </footer>
 </body>
 </html>
