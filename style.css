@@ -97,7 +97,7 @@ body, html {
 
 .link-box {
   background-color: #1f3a60;   /* Slightly lighter blue */
-  padding: 600px 800px;          /* Bigger padding for larger size */
+  padding: 250px 400px;          /* Bigger padding for larger size */
   margin: 20px;
   border-radius: 20px;         /* More rounded corners */
   text-align: center;
