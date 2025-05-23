@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Optional: Font Awesome for skill/social icons -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-title">Your Name</div>
+  </header>
+
+  <!-- Burger Menu -->
+  <button class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Nav Menu -->
+  <nav class="nav-menu">
+    <a href="#cv">CV</a>
+    <a href="#projects">Projects</a>
+    <a href="#contacts">Contacts</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-textbox">
+      <h2 class="typewriter">Welcome</h2>
+      <p>Your portfolio description goes here.</p>
+      <a href="#projects" class="hero-button">View Projects</a>
+    </div>
+  </section>
+
+  <!-- Skills Showcase Section -->
+  <section class="skills-showcase">
+    <div class="container">
+      <h2 class="section-title">My Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card" data-skill="HTML" 
+             data-description="Skilled in semantic HTML5 for building accessible web structures."
+             data-learning="Learned via freeCodeCamp." aria-expanded="false">
+          <span class="skill-name">HTML</span>
+          <div class="skill-content">
+            <h3>HTML</h3>
+            <p>Skilled in semantic HTML5 for building accessible web structures.</p>
+            <p>Learned via freeCodeCamp.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="CSS"
+             data-description="Proficient in CSS3, using Flexbox, Grid, and animations to create responsive, visually appealing designs for modern websites."
+             data-learning="Mastered through Udemy courses and applied in over 15 portfolio projects to enhance user experience." aria-expanded="false">
+          <span class="skill-name">CSS</span>
+          <div class="skill-content">
+            <h3>CSS</h3>
+            <p>Proficient in CSS3, using Flexbox, Grid, and animations to create responsive, visually appealing designs for modern websites.</p>
+            <p>Mastered through Udemy courses and applied in over 15 portfolio projects to enhance user experience.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="JavaScript"
+             data-description="Advanced skills in ES6+, DOM manipulation, and building interactive web applications with dynamic functionality, including task trackers and real-time data handling for complex user interfaces."
+             data-learning="Mastered through Codecademy and hands-on experience building multiple projects, such as a task tracker and an interactive dashboard for data visualization." aria-expanded="false">
+          <span class="skill-name">JavaScript</span>
+          <div class="skill-content">
+            <h3>JavaScript</h3>
+            <p>Advanced skills in ES6+, DOM manipulation, and building interactive web applications with dynamic functionality, including task trackers and real-time data handling for complex user interfaces.</p>
+            <p>Mastered through Codecademy and hands-on experience building multiple projects, such as a task tracker and an interactive dashboard for data visualization.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="React"
+             data-description="Experienced in building single-page applications with React and hooks."
+             data-learning="Learned via official React documentation." aria-expanded="false">
+          <span class="skill-name">React</span>
+          <div class="skill-content">
+            <h3>React</h3>
+            <p>Experienced in building single-page applications with React and hooks.</p>
+            <p>Learned via official React documentation.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="Python"
+             data-description="Proficient in Python for scripting, automation, and backend development, focusing on efficient code and data processing."
+             data-learning="Self-taught through Coursera, with practical experience in developing automation tools for workflow optimization." aria-expanded="false">
+          <span class="skill-name">Python</span>
+          <div class="skill-content">
+            <h3>Python</h3>
+            <p>Proficient in Python for scripting, automation, and backend development, focusing on efficient code and data processing.</p>
+            <p>Self-taught through Coursera, with practical experience in developing automation tools for workflow optimization.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="Node.js"
+             data-description="Skilled in building RESTful APIs and server-side applications using Node.js and Express, with a focus on scalable backend systems and real-time communication for web applications."
+             data-learning="Learned through Traversy Media tutorials and hands-on projects, including building four backend systems for e-commerce and social platforms." aria-expanded="false">
+          <span class="skill-name">Node.js</span>
+          <div class="skill-content">
+            <h3>Node.js</h3>
+            <p>Skilled in building RESTful APIs and server-side applications using Node.js and Express, with a focus on scalable backend systems and real-time communication for web applications.</p>
+            <p>Learned through Traversy Media tutorials and hands-on projects, including building four backend systems for e-commerce and social platforms.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="Figma"
+             data-description="Experienced in creating UI/UX designs, wireframes, and prototypes using Figma, with a focus on user-centered design principles and collaboration for seamless project workflows."
+             data-learning="Mastered through Figma’s official tutorials and practical experience designing over six app interfaces, emphasizing intuitive and accessible user experiences." aria-expanded="false">
+          <span class="skill-name">Figma</span>
+          <div class="skill-content">
+            <h3>Figma</h3>
+            <p>Experienced in creating UI/UX designs, wireframes, and prototypes using Figma, with a focus on user-centered design principles and collaboration for seamless project workflows.</p>
+            <p>Mastered through Figma’s official tutorials and practical experience designing over six app interfaces, emphasizing intuitive and accessible user experiences.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+        <div class="skill-card" data-skill="Git"
+             data-description="Proficient in Git for version control, managing codebases with branching and merging strategies."
+             data-learning="Learned through GitHub guides and contributed to multiple repositories." aria-expanded="false">
+          <span class="skill-name">Git</span>
+          <div class="skill-content">
+            <h3>Git</h3>
+            <p>Proficient in Git for version control, managing codebases with branching and merging strategies.</p>
+            <p>Learned through GitHub guides and contributed to multiple repositories.</p>
+            <button class="skill-close" aria-label="Close skill details">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Links (Content Section) -->
+  <section class="section-links">
+    <div class="container">
+      <a href="#cv" class="link-box" aria-label="View CV page">CV</a>
+      <a href="#projects" class="link-box" aria-label="View Projects page">Projects</a>
+      <a href="#contacts" class="link-box" aria-label="View Contacts page">Contacts</a>
+      <a href="#about" class="link-box" aria-label="View About page">About</a>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="featured-projects">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image"></div>
+          <h3>Project 1</h3>
+          <p>A brief overview of your first project. Showcase your skills and achievements.</p>
+          <a href="#project1" class="project-button" aria-label="View Project 1">View Project</a>
+        </div>
+        <div class="project-card">
+          <div class="project-image"></div>
+          <h3>Project 2</h3>
+          <p>Highlight your second project’s impact and technologies used.</p>
+          <a href="#project2" class="project-button" aria-label="View Project 2">View Project</a>
+        </div>
+        <div class="project-card">
+          <div class="project-image"></div>
+          <h3>Project 3</h3>
+          <p>Describe your third project’s goals and outcomes.</p>
+          <a href="#project3" class="project-button" aria-label="View Project 3">View Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call-to-Action Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="section-title">Let’s Work Together</h2>
+      <p>Ready to bring your ideas to life? Get in touch today.</p>
+      <a href="#contacts" class="cta-button">Contact Me</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2025 Your Name</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
