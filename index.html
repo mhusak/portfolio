@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Husak | Project Portfolio Lead</title>
+    <style>
+        /* =========================================
+           1. CORE VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-dark: #0a192f;
+            --bg-light: #112240;
+            --text-main: #ccd6f6;
+            --text-muted: #8892b0;
+            --accent: #ff8c78; /* Salmon Color */
+            --white: #ffffff;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 50% 50%, #152a46 0%, var(--bg-dark) 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden; 
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(var(--bg-light) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -2; 
+            animation: starPulse 4s infinite alternate;
+        }
+
+        @keyframes starPulse { from { opacity: 0.2; } to { opacity: 0.4; } }
+
+        /* ROCKET PATH CONTAINER */
+        .rocket-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            pointer-events: none; 
+            z-index: -1; 
+        }
+
+        #rocket-path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            opacity: 0.15; 
+        }
+
+        #line-spark {
+            position: absolute;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background-color: var(--white); 
+            box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); 
+            transform: translate(-50%, -50%);
+            opacity: 0; 
+            will-change: top, left;
+        }
+
+        /* LAUNCH PAD GLOW */
+        #launch-pad {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            border-radius: 150px 150px 0 0; 
+            background-color: var(--white);
+            box-shadow: 0 0 60px 20px var(--accent), 0 0 100px 40px rgba(255, 140, 120, 0.6); 
+            opacity: 0; 
+            z-index: -1;
+            filter: blur(15px); 
+            will-change: opacity, transform;
+            pointer-events: none;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* =========================================
+           2. NAVIGATION
+           ========================================= */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            height: 80px;
+            background-color: rgba(10, 25, 47, 0.85);
+            display: flex; align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 140, 120, 0.1);
+        }
+        
+        nav .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); letter-spacing: 2px; }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; color: var(--white); font-family: monospace; }
+        .nav-links a:hover { color: var(--accent); }
+
+        .hamburger {
+            display: none; cursor: pointer; flex-direction: column; gap: 5px;
+            z-index: 2000; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
+        }
+        
+        .bar { width: 25px; height: 3px; background-color: var(--accent); border-radius: 5px; transition: all 0.4s ease; }
+
+        .mobile-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: rgba(10, 25, 47, 0.98); display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 1500;
+        }
+
+        .mobile-links { text-align: center; }
+        .mobile-links li { margin: 30px 0; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; }
+        .mobile-links a { font-size: 2rem; color: var(--white); font-weight: bold; }
+        .mobile-links a:hover { color: var(--accent); }
+
+        nav.menu-open .mobile-menu-overlay { opacity: 1; pointer-events: all; }
+        nav.menu-open .mobile-links li:nth-child(n) { opacity: 1; transform: translateY(0); transition-delay: calc(0.1s * var(--i)); }
+
+        nav.menu-open .hamburger .bar1 { transform: rotate(-45deg) translate(-5px, 6px); }
+        nav.menu-open .hamburger .bar2 { opacity: 0; }
+        nav.menu-open .hamburger .bar3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+        /* =========================================
+           3. UI COMPONENTS
+           ========================================= */
+        .separator {
+            height: 1px; width: 60%; margin: 10px auto; 
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.4;
+        }
+
+        .section-title {
+            font-size: 2rem; color: var(--white); margin-bottom: 60px;
+            position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content: ''; position: absolute; width: 60%; height: 4px;
+            bottom: -10px; left: 0; background-color: var(--accent); border-radius: 2px;
+        }
+
+        .sub-title {
+            font-size: 1.5rem; color: var(--accent); margin-bottom: 30px; 
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sub-title::before { content: '//'; color: var(--text-muted); font-family: monospace; }
+
+        .btn {
+            display: inline-block; padding: 12px 28px;
+            border: 1px solid var(--accent); color: var(--accent);
+            border-radius: 4px; font-weight: bold; background: transparent;
+            position: relative; overflow: hidden; z-index: 1; cursor: pointer;
+        }
+        .btn:hover { background: rgba(255, 140, 120, 0.1); }
+
+        /* SUMMARY / MISSION LOG STYLING */
+        .mission-log {
+            margin-top: 100px; 
+            font-family: monospace;
+            color: var(--text-muted); border-left: 2px solid var(--accent);
+            padding-left: 15px; opacity: 0.9;
+        }
+        .log-label { display: block; color: var(--accent); font-weight: bold; margin-bottom: 12px; font-size: 1rem; letter-spacing: 2px; }
+        .log-text { display: block; margin-bottom: 10px; color: var(--white); font-size: 1.25rem; line-height: 1.6; max-width: 850px; }
+
+        /* SIDEBARS */
+        .side-element {
+            position: fixed; bottom: 0; z-index: 10;
+            color: var(--text-main); display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .side-element::after { content: ""; display: block; width: 1px; height: 90px; background-color: var(--text-muted); margin: 0 auto; }
+        .side-left { left: 40px; }
+        .side-right { right: 40px; }
+        .side-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; transition: var(--transition); }
+        .side-icon:hover { color: var(--accent); transform: translateY(-3px); }
+        .email-link { writing-mode: vertical-rl; font-size: 0.9rem; letter-spacing: 2px; font-family: monospace; }
+        .email-link:hover { color: var(--accent); transform: translateY(-3px); }
+
+        /* =========================================
+           5. SECTIONS
+           ========================================= */
+        section { padding: 100px 0; }
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        #hero { height: auto; min-height: 100vh; padding-top: 180px; padding-bottom: 20px; display: flex; flex-direction: column; justify-content: center; }
+        #hero h1 { font-size: clamp(40px, 8vw, 80px); color: var(--white); margin: 10px 0; }
+        #hero h2 { font-size: clamp(30px, 5vw, 50px); color: var(--text-muted); margin-bottom: 20px; }
+        #hero p { max-width: 540px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 50px; }
+
+        #about { padding-top: 40px; }
+        .about-content { display: grid; grid-template-columns: 3fr 2fr; gap: 50px; align-items: start; }
+        .about-img { position: relative; width: 300px; height: 300px; cursor: pointer; }
+        .profile-img-placeholder {
+            width: 100%; height: 100%; border-radius: 4px; position: absolute; 
+            object-fit: cover; transition: var(--transition); border: 1px solid var(--accent); background-color: var(--bg-light);
+        }
+        .profile-img-placeholder:nth-child(1) { top: 20px; left: 20px; z-index: 1; opacity: 0.5; transform: scale(0.95); object-position: center; }
+        .profile-img-placeholder:nth-child(2) { top: 0; left: 0; z-index: 2; opacity: 1; transform: scale(1); object-position: 80% 20%; }
+        .about-img.swapped .profile-img-placeholder:nth-child(1) { top: 0; left: 0; z-index: 2; opacity: 1; transform: scale(1); }
+        .about-img.swapped .profile-img-placeholder:nth-child(2) { top: 20px; left: 20px; z-index: 1; opacity: 0.5; transform: scale(0.95); }
+        @media (hover: hover) {
+            .about-img:hover .profile-img-placeholder:nth-child(1) { top: 0; left: 0; z-index: 2; opacity: 1; transform: scale(1); }
+            .about-img:hover .profile-img-placeholder:nth-child(2) { top: 20px; left: 20px; z-index: 1; opacity: 0.5; transform: scale(0.95); }
+        }
+
+        /* TIMELINE STYLING - UPDATED TO MATCH ROCKET PATH COLOR AND OPACITY */
+        .timeline-container { 
+            position: relative; 
+            padding-left: 30px; 
+            border-left: 2px solid rgba(255, 140, 120, 0.15); /* Sync with Rocket Path */
+            margin-bottom: 60px; 
+        }
+        .timeline-item { position: relative; margin-bottom: 50px; }
+        .timeline-dot { position: absolute; left: -37px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background-color: var(--bg-dark); border: 2px solid var(--accent); }
+        .timeline-content { background: var(--bg-light); padding: 30px; border-radius: 4px; }
+        .timeline-content h3 { color: var(--white); font-size: 1.3rem; margin-bottom: 5px; }
+        .timeline-content .role { color: var(--accent); font-family: monospace; display: block; margin-bottom: 15px; font-size: 0.9rem; }
+        .timeline-content p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; }
+        .timeline-content ul { list-style: none; }
+        .timeline-content li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; position: relative; padding-left: 20px; }
+        .timeline-content li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+        .timeline-content strong { color: var(--white); }
+
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .flip-card { height: 200px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 4px; padding: 20px; text-align: center; }
+        .flip-card-front { background: var(--bg-light); color: var(--white); border: 1px solid rgba(255, 140, 120, 0.3); }
+        .flip-card-back { background: var(--bg-light); color: var(--accent); border: 1px solid var(--accent); transform: rotateY(180deg); }
+
+        /* GALLERY */
+        .cert-container { margin-top: 40px; width: 100%; overflow: hidden; }
+        .cert-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 40px 0; scrollbar-width: none; cursor: grab; scroll-behavior: auto; }
+        .cert-gallery::-webkit-scrollbar { display: none; }
+        .cert-item { flex: 0 0 280px; height: 200px; background: var(--bg-light); border: 1px solid rgba(255, 140, 120, 0.3); border-radius: 8px; padding: 25px; display: flex; flex-direction: column; transition: transform 0.3s; min-width: 280px; }
+        .cert-icon { font-size: 2rem; margin-bottom: 15px; }
+        .cert-title { font-weight: bold; color: var(--white); font-size: 1rem; margin-bottom: 5px; }
+        .cert-issuer { color: var(--text-muted); font-size: 0.8rem; font-family: monospace; }
+        .cert-year { margin-top: auto; color: var(--accent); font-size: 0.75rem; font-weight: bold; }
+
+        /* FOOTER */
+        .contact-wrapper { text-align: center; max-width: 600px; margin: 0 auto; }
+        .contact-wrapper h2 { font-size: clamp(40px, 5vw, 60px); color: var(--white); margin-bottom: 20px; }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-family: monospace; font-size: 0.8rem; }
+
+        @media (max-width: 768px) { .side-element { display: none; } .about-content { grid-template-columns: 1fr; } .about-img { margin: 40px auto 0; } .nav-links { display: none; } .hamburger { display: flex; } }
+    </style>
+</head>
+<body>
+
+    <div class="rocket-overlay">
+        <svg width="100%" height="100%" preserveAspectRatio="none"><path id="rocket-path" d="" /></svg>
+        <div id="line-spark"></div>
+        <div id="launch-pad"></div> 
+    </div>
+
+    <div class="side-element side-left">
+        <a href="https://www.linkedin.com/in/michael-husak-047b069b/" target="_blank" class="side-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+        </a>
+    </div>
+    <div class="side-element side-right">
+        <a href="mailto:mhusak@protonmail.com" class="email-link">mhusak@protonmail.com</a>
+    </div>
+
+    <nav>
+        <div class="container">
+            <div class="logo">MH.</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger"><div class="bar bar1"></div><div class="bar bar2"></div><div class="bar bar3"></div></div>
+        </div>
+        <div class="mobile-menu-overlay">
+            <ul class="mobile-links">
+                <li style="--i:1"><a href="#about" onclick="toggleMenu()">About</a></li>
+                <li style="--i:2"><a href="#journey" onclick="toggleMenu()">Journey</a></li>
+                <li style="--i:3"><a href="#skills" onclick="toggleMenu()">Skills</a></li>
+                <li style="--i:4"><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="container hidden">
+            <p style="color: var(--accent); font-family: monospace;">Hi, my name is</p>
+            <h1>Michael Husak.</h1>
+            <h2>Project Portfolio Lead.</h2>
+            <p>I specialize in bridging the gap between strategic portfolio management and strict regulatory compliance (HSE/Legal) for critical infrastructure.</p>
+            <a href="#journey" class="btn">Checklist</a>
+            <div class="mission-log">
+                <span class="log-label">SUMMARY:</span>
+                <span class="log-text">MSc in Energy Management with 10 years of experience managing complex logistics. Proven track record in establishing planning units from the ground up and ensuring 100% regulatory compliance. Seeking to apply data driven, operational excellence combined with a strategic and futuristic mindset.</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="about">
+        <div class="container hidden">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>As an Austrian native with a deep-seated passion for the <strong>NewSpace economy</strong>, I have dedicated my career to the intersection of operational excellence and long-term vision. My professional focus is on applying operational leadership and Strategic, Futuristic thinking to ensure seamless mission success in high-stakes environments.</p>
+                    <br>
+                    <p>I specialize in bridging the gap between immediate infrastructure needs and long-term industry goals. By utilizing a calm, analytical approach to decision-making, I ensure that operational frameworks remain resilient and scalable.</p>
+                    <br>
+                    <p>Furthermore, I am a dedicated learner who excels at navigating complex regulatory landscapes. To better support international collaborations—particularly in the High North, I am currently expanding my linguistic profile from native German and C1-C2 English to include Norwegian.</p>
+                </div>
+                <div class="about-img">
+                    <img src="Pictures/picture1.jpg" class="profile-img-placeholder" alt="Portrait">
+                    <img src="Pictures/picture2.jpg" class="profile-img-placeholder" alt="Portrait Layer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="journey">
+        <div class="container hidden">
+            <h2 class="section-title">The Journey</h2>
+            
+            <h3 class="sub-title">Experience</h3>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Head of Logistics Planning & Regulatory License Holder</h3>
+                        <span class="role">Saubermacher Dienstleistungs AG | 2021 - Present</span>
+                        <ul>
+                            <li><strong>Strategic Portfolio Management:</strong> Established and led a centralized planning unit, managing the resource portfolio and operational roadmap for nation-wide logistics while transitioning the organization to data-driven forecasting.</li>
+                            <li><strong>Regulatory & Legal Responsibility:</strong> Appointed as the Regulatory License Holder for Vienna and Lower Austria, exercising full legal oversight and personal liability for the organization’s adherence to national and international transport laws.</li>
+                            <li><strong>Digital Transformation:</strong> Led the enterprise-wide implementation of complex telematics and fleet management systems. Developed a data-driven, cross-functional program with the sales department to optimize resource utilization. </li>
+                            <li><strong>Risk Management:</strong> Partner with Quality Assurance to mitigate legal risks and ensure strict adherence to safety standards in the transport of commercial and hazardous goods.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Logistics Coordinator</h3>
+                        <span class="role">Saubermacher Dienstleistungs AG | 2018 - 2021</span>
+                        <ul>
+                            <li><strong>Operational Command:</strong> Held direct operational command of a 100+ person workforce, ensuring service continuity in a high-volume environment.</li>
+                            <li><strong>Safety Culture (HSE):</strong> Responsible for strict adherence to Health, Safety, and Environmental standards; implemented "Lessons Learned" protocols and Lean Management to improve safety metrics.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Technical Project Engineer</h3>
+                        <span class="role">Binder Energietechnik GmbH | 2016 - 2018</span>
+                        <p>Pre-engineering design for core infrastructure in large-scale biomass energy plants. Focused on technical feasibility and cross-functional project coordination.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="sub-title">Education</h3>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Master of Science (MSc) in Engineering</h3>
+                        <span class="role">Energy and Transport Management | FH Joanneum</span>
+                        <p>Gained expertise in sustainable energy technologies, environmental impact analysis and planning of energy grids and urban areas. The entirely English-held program equipped me with the experience to plan complex infrastructure and to develop concepts for the energy transition and for transportation that are not only sustainable, but both ecologically and economically viable. Practical projects and interdisciplinary collaboration strengthened my ability to implement solutions for a climate-resilient future.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Bachelor of Science (BSc) in Engineering</h3>
+                        <span class="role">Energy- and Environmental Management | FH Joanneum</span>
+                        <p>Provided a solid foundation in sustainable energy systems, modern mobility solutions, and business management. Developed the ability to design and implement efficient, sustainable infrastructure projects. The curriculum emphasized practical experience, laboratory work, and collaborative projects addressing challenges of the green transition.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Matura European Economics</h3>
+                        <span class="role">Business Administration & Accounting</span>
+                        <p>Focus on economic thinking and business principles, specializing in European Economics. Provided the core foundation for administrative leadership and financial logic.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="skills">
+        <div class="container hidden">
+            <h2 class="section-title">Expertise</h2>
+            <div class="skills-grid">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h3>Portfolio Mgmt</h3></div><div class="flip-card-back"><p>Strategic balancing, Risk Mitigation, and Roadmap Development</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h3>Legal & HSE</h3></div><div class="flip-card-back"><p>Direct legal liability for federal safety standards and environmental law.</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h3>Logistics</h3></div><div class="flip-card-back"><p>Operational command, fleet management, and capacity optimization.</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h3>Design & Planning</h3></div><div class="flip-card-back"><p>Aligning resources strategically for maximum efficiency.</p></div></div></div>
+            </div>
+            <h3 class="sub-title" style="margin-top: 80px; justify-content: center;">Regulatory Licenses & HSE Expertise</h3>
+            <div class="cert-container">
+                <div class="cert-gallery">
+                    <div class="cert-item"><div class="cert-icon">⚡</div><div class="cert-title">Certified Energy Trader</div><div class="cert-issuer">EXAA Austria (Spot Market)</div><div class="cert-year">11/2015</div></div>
+                    <div class="cert-item"><div class="cert-icon">🚛</div><div class="cert-title">Accredited Transport Mgmt.</div><div class="cert-issuer">Road Haulage License</div><div class="cert-year">2021</div></div>
+                    <div class="cert-item"><div class="cert-icon">🔍</div><div class="cert-title">Internal Auditor</div><div class="cert-issuer">Environmental (ISO 14001)</div><div class="cert-year">11/2014</div></div>
+                    <div class="cert-item"><div class="cert-icon">🌍</div><div class="cert-title">Environm. Compliance Officer</div><div class="cert-issuer">Sustainability Management</div><div class="cert-year">11/2014</div></div>
+                    <div class="cert-item"><div class="cert-icon">♻️</div><div class="cert-title">Waste Mgmt. Specialist</div><div class="cert-issuer">Regulatory Compliance</div><div class="cert-year">05/2014</div></div>
+                </div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 15px; user-select: none;"><span id="prev-btn" class="gallery-nav">&larr;</span> Scroll to explore <span id="next-btn" class="gallery-nav">&rarr;</span></p>
+                <p style="text-align: center; font-size: 0.8rem; margin-top: 20px; color: var(--text-muted); opacity: 0.8;">Verification of documents provided upon request.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="contact">
+        <div class="container hidden"><div class="contact-wrapper"><p style="color: var(--accent); font-family: monospace; margin-bottom: 10px;">Ready for Launch?</p><h2>Get In Touch</h2><p style="color: var(--text-muted); margin-bottom: 40px;">I am currently seeking to apply my operational leadership and engineering background in the <strong>New Space sector</strong>. My inbox is always open.</p><a href="mailto:mhusak@protonmail.com" class="btn">Send Message</a></div></div>
+    </section>
+
+    <footer><p>Built by Michael Husak &copy; 2026</p></footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+
+        const path = document.getElementById('rocket-path');
+        const spark = document.getElementById('line-spark');
+        const launchPad = document.getElementById('launch-pad');
+        
+        function updatePath() {
+            const w = window.innerWidth;
+            const h = window.innerHeight; 
+            const d = `M ${w/2},${h} C ${w/2},${h*0.5} 0,${h*0} 0,0`;
+            path.setAttribute('d', d);
+        }
+
+        const easeOut = p => 1 - Math.pow(1 - p, 4);
+
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const pathLen = path.getTotalLength();
+            const easedPercent = easeOut(Math.min(scrollPercent, 1));
+            const point = path.getPointAtLength(pathLen * (1 - easedPercent));
+            spark.style.opacity = scrollPercent > 0 ? 1 : 0;
+            spark.style.left = point.x + 'px';
+            spark.style.top = point.y + 'px';
+
+            const ignitionStart = 0.8;
+            if (scrollPercent > ignitionStart) {
+                const intensity = (scrollPercent - ignitionStart) / (1 - ignitionStart);
+                launchPad.style.opacity = intensity;
+                launchPad.style.transform = `translateX(-50%) scale(${0.8 + (intensity * 0.4)})`;
+            } else { launchPad.style.opacity = 0; }
+        });
+
+        const gallery = document.querySelector('.cert-gallery');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const originalItems = Array.from(gallery.children);
+        originalItems.forEach(item => gallery.appendChild(item.cloneNode(true)));
+        originalItems.reverse().forEach(item => gallery.insertBefore(item.cloneNode(true), gallery.firstChild));
+        const itemWidth = 300; 
+        const singleSetWidth = originalItems.length * itemWidth;
+        gallery.scrollLeft = singleSetWidth;
+
+        gallery.addEventListener('scroll', () => {
+            if (gallery.scrollLeft >= singleSetWidth * 2) { gallery.scrollLeft = singleSetWidth; } 
+            else if (gallery.scrollLeft <= 0) { gallery.scrollLeft = singleSetWidth; }
+        });
+
+        gallery.addEventListener('wheel', (e) => { if (e.deltaY !== 0) { e.preventDefault(); gallery.scrollLeft += e.deltaY; } });
+
+        let isDown = false, startX, scrollLeft;
+        gallery.addEventListener('mousedown', (e) => { isDown = true; gallery.style.cursor = 'grabbing'; startX = e.pageX - gallery.offsetLeft; scrollLeft = gallery.scrollLeft; });
+        gallery.addEventListener('mouseleave', () => { isDown = false; gallery.style.cursor = 'grab'; });
+        gallery.addEventListener('mouseup', () => { isDown = false; gallery.style.cursor = 'grab'; });
+        gallery.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - gallery.offsetLeft; const walk = (x - startX) * 2; gallery.scrollLeft = scrollLeft - walk; });
+
+        prevBtn.addEventListener('click', () => { gallery.scrollBy({ left: -300, behavior: 'smooth' }); });
+        nextBtn.addEventListener('click', () => { gallery.scrollBy({ left: 300, behavior: 'smooth' }); });
+
+        const aboutImg = document.querySelector('.about-img');
+        aboutImg.addEventListener('click', () => { aboutImg.classList.toggle('swapped'); });
+
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        hamburger.addEventListener('click', () => { nav.classList.toggle('menu-open'); });
+        function toggleMenu() { nav.classList.remove('menu-open'); }
+
+        window.addEventListener('resize', updatePath);
+        updatePath();
+    </script>
+</body>
+</html>
