@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Husak | Project Portfolio Lead</title>
+    <style>
+        /* =========================================
+           1. CORE VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-dark: #0a192f;
+            --bg-light: #112240;
+            --text-main: #ccd6f6;
+            --text-muted: #8892b0;
+            --accent: #ff8c78; /* Salmon Color */
+            --white: #ffffff;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 50% 50%, #152a46 0%, var(--bg-dark) 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden; 
+            position: relative;
+        }
+
+        /* BACKGROUND ANIMATION */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(var(--bg-light) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -2; 
+            animation: starPulse 4s infinite alternate;
+        }
+
+        @keyframes starPulse {
+            from { opacity: 0.2; }
+            to { opacity: 0.4; }
+        }
+
+        /* ROCKET PATH CONTAINER */
+        .rocket-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            pointer-events: none; 
+            z-index: -1; 
+        }
+
+        #rocket-path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            opacity: 0.2; 
+        }
+
+        #line-spark {
+            position: absolute;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background-color: var(--white); 
+            box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); 
+            transform: translate(-50%, -50%);
+            opacity: 0; 
+            transition: opacity 0.3s;
+            will-change: top, left;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* =========================================
+           2. NAVIGATION
+           ========================================= */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            height: 80px;
+            background-color: rgba(10, 25, 47, 0.85);
+            display: flex; align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 140, 120, 0.1);
+        }
+        
+        nav .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%;
+        }
+
+        .logo { 
+            font-size: 1.5rem; font-weight: bold; color: var(--accent); 
+            letter-spacing: 2px;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; color: var(--white); font-family: monospace; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* =========================================
+           3. UI COMPONENTS
+           ========================================= */
+        /* RESTORED SEPARATOR STYLE */
+        .separator {
+            height: 1px; width: 60%; margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.4;
+        }
+
+        .section-title {
+            font-size: 2rem; color: var(--white); margin-bottom: 60px;
+            position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content: ''; position: absolute; width: 60%; height: 4px;
+            bottom: -10px; left: 0; background-color: var(--accent); border-radius: 2px;
+        }
+
+        .sub-title {
+            font-size: 1.5rem; color: var(--accent); margin-bottom: 30px; 
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sub-title::before { content: '//'; color: var(--text-muted); font-family: monospace; }
+
+        .btn {
+            display: inline-block; padding: 12px 28px;
+            border: 1px solid var(--accent); color: var(--accent);
+            border-radius: 4px; font-weight: bold; background: transparent;
+            position: relative; overflow: hidden; z-index: 1; cursor: pointer;
+        }
+        .btn:hover { background: rgba(255, 140, 120, 0.1); }
+
+        /* =========================================
+           4. SIDEBARS
+           ========================================= */
+        .side-element {
+            position: fixed; bottom: 0; z-index: 10;
+            color: var(--text-main); display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .side-element::after {
+            content: ""; display: block; width: 1px; height: 90px;
+            background-color: var(--text-muted); margin: 0 auto;
+        }
+        .side-left { left: 40px; }
+        .side-right { right: 40px; }
+        
+        .side-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; transition: var(--transition); }
+        .side-icon:hover { color: var(--accent); transform: translateY(-3px); }
+        .email-link { writing-mode: vertical-rl; font-size: 0.9rem; letter-spacing: 2px; font-family: monospace; }
+        .email-link:hover { color: var(--accent); transform: translateY(-3px); }
+
+        /* =========================================
+           5. SECTIONS
+           ========================================= */
+        section { padding: 100px 0; }
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        #hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        #hero h1 { font-size: clamp(40px, 8vw, 80px); color: var(--white); margin: 10px 0; }
+        #hero h2 { font-size: clamp(30px, 5vw, 50px); color: var(--text-muted); margin-bottom: 20px; }
+        #hero p { max-width: 540px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 50px; }
+
+        /* ABOUT */
+        .about-content { display: grid; grid-template-columns: 3fr 2fr; gap: 50px; align-items: start; }
+        .about-img { position: relative; width: 300px; height: 300px; }
+        .profile-img-placeholder {
+            width: 100%; height: 100%; border-radius: 4px;
+            position: absolute; object-fit: cover; transition: var(--transition);
+            border: 1px solid var(--accent);
+            background-color: var(--bg-light);
+        }
+        .profile-img-placeholder:nth-child(1) { top: 20px; left: 20px; z-index: 1; opacity: 0.5; }
+        .profile-img-placeholder:nth-child(2) { top: 0; left: 0; z-index: 2; }
+        .about-img:hover .profile-img-placeholder:nth-child(2) { transform: translate(-10px, -10px); }
+
+        /* TIMELINE */
+        .timeline-container { position: relative; padding-left: 30px; border-left: 2px solid var(--bg-light); margin-bottom: 60px; }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-dot {
+            position: absolute; left: -37px; top: 5px; width: 12px; height: 12px;
+            border-radius: 50%; background-color: var(--bg-dark); border: 2px solid var(--accent);
+        }
+        .timeline-content { background: var(--bg-light); padding: 25px; border-radius: 4px; }
+        .timeline-content h3 { color: var(--white); font-size: 1.2rem; }
+        .timeline-content .role { color: var(--accent); font-family: monospace; display: block; margin: 5px 0 15px; }
+        .timeline-content p { font-size: 0.95rem; color: var(--text-muted); }
+
+        /* SKILLS FLIP CARDS */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .flip-card { height: 200px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 4px; padding: 20px; text-align: center;
+        }
+        .flip-card-front { background: var(--bg-light); color: var(--white); }
+        .flip-card-back { background: var(--bg-light); color: var(--accent); border: 1px solid var(--accent); transform: rotateY(180deg); }
+
+        /* CERTIFICATE GALLERY (REGULATORY CARDS) */
+        .cert-container { margin-top: 40px; width: 100%; overflow: hidden; }
+        .cert-gallery {
+            display: flex; gap: 20px; overflow-x: auto; padding: 40px 0;
+            scrollbar-width: none; cursor: grab;
+        }
+        .cert-gallery::-webkit-scrollbar { display: none; }
+        
+        .cert-item {
+            flex: 0 0 280px; height: 200px; background: var(--bg-light);
+            border: 1px solid rgba(255, 140, 120, 0.3); border-radius: 8px;
+            padding: 25px; display: flex; flex-direction: column; transition: transform 0.3s;
+        }
+        .cert-icon { font-size: 2rem; margin-bottom: 15px; }
+        .cert-title { font-weight: bold; color: var(--white); font-size: 1rem; margin-bottom: 5px; }
+        .cert-issuer { color: var(--text-muted); font-size: 0.8rem; font-family: monospace; }
+        .cert-year { margin-top: auto; color: var(--accent); font-size: 0.75rem; font-weight: bold; }
+
+        /* CONTACT */
+        .contact-wrapper { text-align: center; max-width: 600px; margin: 0 auto; }
+        .contact-wrapper h2 { font-size: clamp(40px, 5vw, 60px); color: var(--white); margin-bottom: 20px; }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-family: monospace; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .side-element { display: none; }
+            .about-content { grid-template-columns: 1fr; }
+            .about-img { margin: 40px auto 0; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="rocket-overlay">
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+            <path id="rocket-path" d="" />
+        </svg>
+        <div id="line-spark"></div>
+    </div>
+
+    <div class="side-element side-left">
+        <a href="https://www.linkedin.com/in/michael-husak-047b069b/" target="_blank" class="side-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+        </a>
+    </div>
+    <div class="side-element side-right">
+        <a href="mailto:mhusak@protonmail.com" class="email-link">mhusak@protonmail.com</a>
+    </div>
+
+    <nav>
+        <div class="container">
+            <div class="logo">MH.</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="container hidden">
+            <p style="color: var(--accent); font-family: monospace;">Hi, my name is</p>
+            <h1>Michael Husak.</h1>
+            <h2>Project Portfolio Lead.</h2>
+            <p>I specialize in bridging the gap between strategic portfolio management and strict regulatory compliance (HSE/Legal) for critical infrastructure.</p>
+            <a href="#journey" class="btn">Checklist</a>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="about">
+        <div class="container hidden">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>MSc in Energy Management with 10 years of experience managing complex logistics and large-scale teams. I have a proven track record in establishing planning units from the ground up and ensuring 100% regulatory compliance in safety-critical environments.</p>
+                    <br>
+                    <p>I am an Austrian national with a deep passion for the <strong>New Space economy</strong>. My focus is on applying operational leadership and engineering rigor to ensure seamless mission success.</p>
+                    <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px; font-family: monospace; font-size: 0.9rem; color: var(--accent);">
+                        <li>▹ Strategic Leadership</li>
+                        <li>▹ HSE Compliance</li>
+                        <li>▹ Capacity Optimization</li>
+                        <li>▹ Data Visualization</li>
+                    </ul>
+                </div>
+                <div class="about-img">
+                    <img src="Pictures/picture1.jpg" class="profile-img-placeholder" alt="Portrait">
+                    <img src="Pictures/picture2.jpg" class="profile-img-placeholder" alt="Portrait Layer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="journey">
+        <div class="container hidden">
+            <h2 class="section-title">The Journey</h2>
+            
+            <h3 class="sub-title">Experience</h3>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Head of Logistics Planning</h3>
+                        <span class="role">Saubermacher Dienstleistungs AG | 2021 - Present</span>
+                        <p>Established a centralized planning unit and holding full legal responsibility (Gewerberechtlicher Geschäftsführer) for federal regulatory standards.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Logistics Coordinator</h3>
+                        <span class="role">Saubermacher Dienstleistungs AG | 2018 - 2021</span>
+                        <p>Direct command of 100+ personnel. Focused on Lean Management and strict adherence to environmental safety protocols.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Technical Project Engineer</h3>
+                        <span class="role">Binder Energietechnik GmbH | 2016 - 2018</span>
+                        <p>Pre-engineering design for core infrastructure in large-scale biomass energy plants.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="sub-title">Education</h3>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>MSc in Engineering</h3>
+                        <span class="role">FH Joanneum | Energy & Transport Management</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>BSc in Engineering</h3>
+                        <span class="role">FH Joanneum | Energy & Environmental Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="skills">
+        <div class="container hidden">
+            <h2 class="section-title">Expertise</h2>
+            <div class="skills-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>Portfolio Mgmt</h3></div>
+                        <div class="flip-card-back"><p>Strategic balancing, Risk Mitigation, and Roadmap Development</p></div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>Legal & HSE</h3></div>
+                        <div class="flip-card-back"><p>Direct legal liability for federal safety standards and environmental law.</p></div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>Logistics</h3></div>
+                        <div class="flip-card-back"><p>Operational command, fleet management, and capacity optimization.</p></div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>Design & Planning</h3></div>
+                        <div class="flip-card-back"><p>Aligning resources strategically for maximum efficiency.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="sub-title" style="margin-top: 80px; justify-content: center;">Regulatory Licenses & HSE Expertise</h3>
+            <div class="cert-container">
+                <div class="cert-gallery">
+                    <div class="cert-item">
+                        <div class="cert-icon">⚡</div>
+                        <div class="cert-title">Certified Energy Trader</div>
+                        <div class="cert-issuer">EXAA Austria (Spot Market)</div>
+                        <div class="cert-year">11/2015</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon">🚛</div>
+                        <div class="cert-title">Accredited Transport Mgmt.</div>
+                        <div class="cert-issuer">Road Haulage License</div>
+                        <div class="cert-year">2021</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon">🔍</div>
+                        <div class="cert-title">Internal Auditor</div>
+                        <div class="cert-issuer">Environmental (ISO 14001)</div>
+                        <div class="cert-year">11/2014</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon">🌍</div>
+                        <div class="cert-title">Environm. Compliance Officer</div>
+                        <div class="cert-issuer">Sustainability Management</div>
+                        <div class="cert-year">11/2014</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon">♻️</div>
+                        <div class="cert-title">Waste Mgmt. Specialist</div>
+                        <div class="cert-issuer">Regulatory Compliance</div>
+                        <div class="cert-year">05/2014</div>
+                    </div>
+                </div>
+<p>Please feel free to contact me for a proof of listed licenses. For reasons of data-safety, I am not able to upload any documents to this page.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="contact">
+        <div class="container hidden">
+            <div class="contact-wrapper">
+                <p style="color: var(--accent); font-family: monospace; margin-bottom: 10px;">Ready for Launch?</p>
+                <h2>Get In Touch</h2>
+                <p style="color: var(--text-muted); margin-bottom: 40px;">My inbox is always open.</p>
+                <a href="mailto:mhusak@protonmail.com" class="btn">Send Message</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built by Michael Husak &copy; 2026</p>
+    </footer>
+
+    <script>
+        // Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+
+        // Rocket Path Logic
+        const path = document.getElementById('rocket-path');
+        const spark = document.getElementById('line-spark');
+        
+        function updatePath() {
+            const w = window.innerWidth;
+            const h = document.body.scrollHeight;
+            const d = `M 0,0 C ${w*0.8},${h*0.2} ${w*0.2},${h*0.8} ${w},${h}`;
+            path.setAttribute('d', d);
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const pathLen = path.getTotalLength();
+            const point = path.getPointAtLength(pathLen * scrollPercent);
+            
+            spark.style.opacity = scrollPercent > 0 ? 1 : 0;
+            spark.style.left = point.x + 'px';
+            spark.style.top = point.y + 'px';
+        });
+
+        // Horizontal Scroll for Gallery
+        const gallery = document.querySelector('.cert-gallery');
+        gallery.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                gallery.scrollLeft += e.deltaY;
+            }
+        });
+
+        window.addEventListener('resize', updatePath);
+        updatePath();
+    </script>
+</body>
+</html>
